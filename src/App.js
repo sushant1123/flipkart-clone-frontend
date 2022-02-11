@@ -1,11 +1,10 @@
 import "./App.css";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import HomePage from "./containers/homePage/HomePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductListPage from "./containers/productListPage/ProductListPage";
 
 function App() {
-	const name = useSelector((state) => state.name);
 	return (
 		<div className="App">
 			<Router>
