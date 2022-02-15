@@ -35,10 +35,11 @@ export const addAddress = (payload) => {
 			const res = await axios.post(`/user/address/create`, { payload });
 			if (res.status === 201) {
 				console.log(res);
-				// const {
-				// 	address: { address },
-				// } = res.data;
-				// dispatch(addUserAddressSuccess(address));
+				const {
+					address: { address },
+				} = res.data;
+
+				dispatch(addUserAddressSuccess(address));
 			} else {
 				const { error } = res.data;
 				dispatch(addUserAddressFailure(error));

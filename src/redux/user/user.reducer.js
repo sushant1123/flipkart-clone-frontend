@@ -40,13 +40,28 @@ const userReducer = (state = initialUserState, action) => {
 			};
 			break;
 
-		// case ADD_USER_ADDRESS_REQUEST:
-		// 	state = {
-		// 		...state,
-		// 		loading: false,
-		// 		productDetails: action.payload.productDetails,
-		// 	};
-		// 	break;
+		case ADD_USER_ADDRESS_REQUEST:
+			state = {
+				...state,
+				loading: true,
+			};
+			break;
+
+		case ADD_USER_ADDRESS_SUCCESS:
+			state = {
+				...state,
+				loading: false,
+				address: action.payload.address,
+			};
+			break;
+
+		case ADD_USER_ADDRESS_FAILURE:
+			state = {
+				...state,
+				loading: false,
+				error: action.payload.error,
+			};
+			break;
 
 		default:
 			state = { ...state };

@@ -10,14 +10,10 @@ const AddressForm = (props) => {
 	const [pinCode, setPinCode] = useState(initialData ? initialData.pinCode : "");
 	const [locality, setLocality] = useState(initialData ? initialData.locality : "");
 	const [address, setAddress] = useState(initialData ? initialData.address : "");
-	const [cityDistrictTown, setCityDistrictTown] = useState(
-		initialData ? initialData.cityDistrictTown : ""
-	);
+	const [cityDistrictTown, setCityDistrictTown] = useState(initialData ? initialData.cityDistrictTown : "");
 	const [state, setState] = useState(initialData ? initialData.state : "");
 	const [landmark, setLandmark] = useState(initialData ? initialData.landmark : "");
-	const [alternatePhone, setAlternatePhone] = useState(
-		initialData ? initialData.alternatePhone : ""
-	);
+	const [alternatePhone, setAlternatePhone] = useState(initialData ? initialData.alternatePhone : "");
 	const [addressType, setAddressType] = useState(initialData ? initialData.addressType : "");
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
@@ -84,11 +80,7 @@ const AddressForm = (props) => {
 			<>
 				<div className="flexRow">
 					<div style={inputContainer}>
-						<MaterialInput
-							label="Name"
-							value={name}
-							onChange={(e) => setName(e.target.value)}
-						/>
+						<MaterialInput label="Name" value={name} onChange={(e) => setName(e.target.value)} />
 					</div>
 					<div style={inputContainer}>
 						<MaterialInput

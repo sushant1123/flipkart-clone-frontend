@@ -40,6 +40,21 @@ const CartPage = (props) => {
 		dispatch(addToCart(productObj, -1));
 	};
 
+	if (props.onlyCartItems) {
+		return (
+			<>
+				{Object.keys(cartItems).map((key, index) => (
+					<CartItem
+						key={index}
+						cartItem={cartItems[key]}
+						onQuantityInc={onQuantityIncrement}
+						onQuantityDec={onQuantityDecrement}
+					/>
+				))}
+			</>
+		);
+	}
+
 	return (
 		<Layout>
 			<div className="cartContainer" style={{ alignItems: "flex-start" }}>
@@ -69,15 +84,12 @@ const CartPage = (props) => {
 						}}
 					>
 						<div style={{ width: "250px" }}>
-							<MaterialButton
-								title="PLACE ORDER"
-								onClick={() => navigate(`/checkout`)}
-							/>
+							<MaterialButton title="PLACE ORDER" onClick={() => navigate(`/checkout`)} />
 						</div>
 					</div>
 				</Card>
 
-				<Card headerLeft="Price" style={{ width: "380px" }}></Card>
+				{/* <Card headerLeft="Price" style={{ width: "380px" }}></Card> */}
 
 				<PriceDetails
 					totalItem={Object.keys(cart.cartItems).reduce(function (qty, key) {

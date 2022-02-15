@@ -1,273 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import Layout from "../../components/layout/Layout";
-// import {
-// 	MaterialButton,
-// 	MaterialInput,
-// } from "../../components/materialUI/MaterialUI";
-
-// // import Card from "../../components/UI/card/Card";
-// // import CartPage from "../cartPage/CartPage";
-// import AddressForm from "./AddressForm";
-// import { getAddress } from "../../redux/allAsyncActions/allAsyncActions";
-
-// import "./style.css";
-
-// //checkout is a 4-step process
-
-// const CheckoutStep = (props) => {
-// 	return (
-// 		<div className="checkoutStep">
-// 			<div
-// 				onClick={props.onClick}
-// 				className={`checkoutHeader ${props.active && "active"}`}
-// 			>
-// 				<div>
-// 					<span className="stepNumber">{props.stepNumber}</span>
-// 					<span className="stepTitle">{props.title}</span>
-// 				</div>
-// 			</div>
-// 			{props.body && props.body}
-// 		</div>
-// 	);
-// };
-
-// const CheckoutPage = () => {
-// 	const user = useSelector((state) => state.user);
-// 	const auth = useSelector((state) => state.auth);
-// 	const dispatch = useDispatch();
-
-// 	const [newAddress, setNewAddress] = useState(false);
-// 	const [address, setAddress] = useState([]);
-// 	const [confirmAddress, setConfirmAddress] = useState(false);
-// 	const [selectedAddress, setSelectedAddress] = useState(null);
-
-// 	useEffect(() => {
-// 		auth.authenticate && dispatch(getAddress());
-// 	}, [auth.authenticate]);
-
-// 	useEffect(() => {
-// 		const address = user.address.map((adr) => ({
-// 			...adr,
-// 			selected: false,
-// 			edit: false,
-// 		}));
-
-// 		setAddress(address);
-// 	}, [user.address]);
-
-// 	const onAddressSubmit = () => {};
-
-// 	const selectAddress = (addr) => {
-// 		console.log(addr);
-// 		// address.selected = true;
-// 		const updatedAdr = address.map((adr) =>
-// 			adr._id === addr._id
-// 				? { ...adr, selected: true }
-// 				: { ...adr, selected: false }
-// 		);
-
-// 		setAddress(updatedAdr);
-// 	};
-
-// 	const confirmDeliveryAddress = (addr) => {
-// 		setConfirmAddress(true);
-// 		setSelectedAddress(addr);
-// 	};
-
-// 	return (
-// 		<Layout>
-// 			<div className="cartContainer" style={{ alignItems: "flex-start" }}>
-// 				<div className="checkoutContainer">
-// 					{/* check if user logged in or not */}
-// 					<CheckoutStep
-// 						stepNumber={"1"}
-// 						title={"LOGIN"}
-// 						active={!auth.authenticate}
-// 						body={
-// 							auth.authenticate ? (
-// 								<div className="loggedInId">
-// 									<span style={{ fontWeight: 500 }}>
-// 										{auth.user.fullName}
-// 									</span>
-// 									<span style={{ margin: "0 5px" }}>
-// 										{auth.user.email}
-// 									</span>
-// 								</div>
-// 							) : (
-// 								<div>
-// 									<MaterialInput label={"Email"} />
-// 								</div>
-// 							)
-// 						}
-// 					/>
-// 					{/* Delivery Address */}
-// 					<CheckoutStep
-// 						stepNumber={"2"}
-// 						title={"DELIVERY ADDRESS"}
-// 						active={!confirmAddress}
-// 						body={
-// 							<>
-// 								{confirmAddress
-// 									? JSON.stringify(selectedAddress)
-// 									: address.map((adr) => (
-// 											<div
-// 												className="flexRow addressContainer"
-// 												key={adr._id}
-// 											>
-// 												<div>
-// 													<input
-// 														type="radio"
-// 														name="address"
-// 														onClick={() =>
-// 															selectAddress(adr)
-// 														}
-// 													/>
-// 												</div>
-// 												<div className="flexRow sb addressInfo">
-// 													<div>
-// 														<div>
-// 															<span>
-// 																{adr.name}
-// 															</span>
-// 															<span>
-// 																{
-// 																	adr.addressType
-// 																}
-// 															</span>
-// 															<span>
-// 																{
-// 																	adr.mobileNumber
-// 																}
-// 															</span>
-// 														</div>
-
-// 														<div>{adr.address}</div>
-
-// 														{adr.selected && (
-// 															<MaterialButton
-// 																title="Deliver Here"
-// 																style={{
-// 																	width: "250px",
-// 																}}
-// 																onClick={() =>
-// 																	confirmDeliveryAddress(
-// 																		adr
-// 																	)
-// 																}
-// 															/>
-// 														)}
-// 													</div>
-// 													{adr.selected && (
-// 														<div>Edit</div>
-// 													)}
-// 												</div>
-// 											</div>
-// 									  ))}
-// 							</>
-// 						}
-// 					/>
-
-// 					{/* Add New Address form enablement */}
-// 					{confirmAddress ? null : newAddress ? (
-// 						<AddressForm
-// 							onSubmitForm={onAddressSubmit}
-// 							onCancel={() => {}}
-// 						/>
-// 					) : (
-// 						<CheckoutStep
-// 							title="Add New Address"
-// 							stepNumber={"+"}
-// 							active={false}
-// 							onClick={() => setNewAddress(true)}
-// 						/>
-// 					)}
-
-// 					{/* Order Summary */}
-// 					<CheckoutStep
-// 						stepNumber={"3"}
-// 						title={"ORDER SUMMARY"}
-// 						active={false}
-// 						// body={
-// 						// 	orderSummary ? (
-// 						// 		<CartPage onlyCartItems={true} />
-// 						// 	) : orderConfirmation ? (
-// 						// 		<div className="stepCompleted">
-// 						// 			{Object.keys(cart.cartItems).length} items
-// 						// 		</div>
-// 						// 	) : null
-// 						// }
-// 					/>
-
-// 					{/* {orderSummary && (
-// 						<Card
-// 							style={{
-// 								margin: "10px 0",
-// 							}}
-// 						>
-// 							<div
-// 								className="flexRow sb"
-// 								style={{
-// 									padding: "20px",
-// 									alignItems: "center",
-// 								}}
-// 							>
-// 								<p style={{ fontSize: "12px" }}>
-// 									Order confirmation email will be sent to{" "}
-// 									<strong>{auth.user.email}</strong>
-// 								</p>
-// 								<MaterialButton
-// 									title="CONTINUE"
-// 									onClick={userOrderConfirmation}
-// 									style={{
-// 										width: "200px",
-// 									}}
-// 								/>
-// 							</div>
-// 						</Card>
-// 					)} */}
-
-// 					<CheckoutStep
-// 						stepNumber={"4"}
-// 						title={"PAYMENT OPTIONS"}
-// 						active={false}
-// 						// body={
-// 						// 	paymentOption && (
-// 						// 		<div>
-// 						// 			<div
-// 						// 				className="flexRow"
-// 						// 				style={{
-// 						// 					alignItems: "center",
-// 						// 					padding: "20px",
-// 						// 				}}
-// 						// 			>
-// 						// 				<input
-// 						// 					type="radio"
-// 						// 					name="paymentOption"
-// 						// 					value="cod"
-// 						// 				/>
-// 						// 				<div>Cash on delivery</div>
-// 						// 			</div>
-// 						// 			<MaterialButton
-// 						// 				title="CONFIRM ORDER"
-// 						// 				onClick={onConfirmOrder}
-// 						// 				style={{
-// 						// 					width: "200px",
-// 						// 					margin: "0 0 20px 20px",
-// 						// 				}}
-// 						// 			/>
-// 						// 		</div>
-// 						// 	)
-// 						// }
-// 					/>
-// 				</div>
-// 			</div>
-// 		</Layout>
-// 	);
-// };
-
-// export default CheckoutPage;
-
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -475,6 +205,7 @@ const CheckoutPage = (props) => {
 								) : (
 									address.map((adr) => (
 										<Address
+											key={adr._id}
 											selectAddress={selectAddress}
 											enableAddressEditForm={enableAddressEditForm}
 											confirmDeliveryAddress={confirmDeliveryAddress}
@@ -507,7 +238,9 @@ const CheckoutPage = (props) => {
 							orderSummary ? (
 								<CartPage onlyCartItems={true} />
 							) : orderConfirmation ? (
-								<div className="stepCompleted">{Object.keys(cart.cartItems).length} items</div>
+								<div className="stepCompleted">
+									{Object.keys(cart.cartItems).length} items
+								</div>
 							) : null
 						}
 					/>
@@ -526,7 +259,8 @@ const CheckoutPage = (props) => {
 								}}
 							>
 								<p style={{ fontSize: "12px" }}>
-									Order confirmation email will be sent to <strong>{auth.user.email}</strong>
+									Order confirmation email will be sent to{" "}
+									<strong>{auth.user.email}</strong>
 								</p>
 								<MaterialButton
 									title="CONTINUE"
