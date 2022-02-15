@@ -4,12 +4,10 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductListPage from "./containers/productListPage/ProductListPage";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-	isUserLoggedIn,
-	updateCart,
-} from "./redux/allAsyncActions/allAsyncActions";
+import { isUserLoggedIn, updateCart } from "./redux/allAsyncActions/allAsyncActions";
 import ProductDetailsPage from "./containers/productDetailsPage/ProductDetailsPage";
 import CartPage from "./containers/cartPage/CartPage";
+import CheckoutPage from "./containers/checkoutPage/CheckoutPage";
 
 function App() {
 	const auth = useSelector((state) => state.auth);
@@ -22,15 +20,17 @@ function App() {
 	}, [auth.authenticate]);
 
 	useEffect(() => {
+		console.log("App.js", "updateCart");
 		dispatch(updateCart());
-	}, []);
+	}, [auth.authenticate]);
 
 	return (
 		<div className="App">
 			<Router>
 				<Routes>
-					<Route path="/" element={<HomePage />}></Route>
+					<Route exact path="/" element={<HomePage />}></Route>
 					<Route path="/cart" element={<CartPage />}></Route>
+					<Route path="/checkout" element={<CheckoutPage />}></Route>
 					<Route
 						path="/:productSlug/:productId/p"
 						element={<ProductDetailsPage />}

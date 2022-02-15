@@ -1,4 +1,5 @@
 import axios from "../../helpers/axios";
+import { resetCart } from "../cart/cart.actions";
 import {
 	loginFailure,
 	loginRequest,
@@ -40,11 +41,13 @@ export const signout = () => {
 
 		if (res.status === 200) {
 			//remove our data from localstorage
-			localStorage.removeItem("token");
-			localStorage.removeItem("user");
+			// localStorage.removeItem("token");
+			// localStorage.removeItem("user");
+			localStorage.clear();
 
 			//dispatch an action creator
 			dispatch(logoutSuccess(res.data.message));
+			dispatch(resetCart());
 		} else {
 			dispatch(logoutFailure(res.data.error));
 		}

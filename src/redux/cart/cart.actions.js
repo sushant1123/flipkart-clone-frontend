@@ -2,12 +2,11 @@ import {
 	ADD_TO_CART_REQUEST,
 	ADD_TO_CART_SUCCESS,
 	ADD_TO_CART_FAILURE,
+	RESET_CART,
 } from "./cartConstants";
 
 export const addToCartRequest = () => {
-	return {
-		type: ADD_TO_CART_REQUEST,
-	};
+	return { type: ADD_TO_CART_REQUEST };
 };
 
 export const addToCartSuccess = (cartItems) => {
@@ -22,4 +21,8 @@ export const addToCartFailure = (error) => {
 		type: ADD_TO_CART_FAILURE,
 		payload: { error },
 	};
+};
+
+export const resetCart = () => {
+	return { type: RESET_CART };
 };

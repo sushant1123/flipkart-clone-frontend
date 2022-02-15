@@ -2,11 +2,12 @@ import {
 	ADD_TO_CART_REQUEST,
 	ADD_TO_CART_FAILURE,
 	ADD_TO_CART_SUCCESS,
+	RESET_CART,
 } from "./cartConstants";
 
 const initialCartState = {
 	cartItems: {},
-	loading: false,
+	updatingCart: false,
 	error: null,
 };
 
@@ -15,14 +16,14 @@ const categoryReducer = (state = initialCartState, action) => {
 		case ADD_TO_CART_REQUEST:
 			state = {
 				...state,
-				loading: true,
+				updatingCart: true,
 			};
 			break;
 
 		case ADD_TO_CART_SUCCESS:
 			state = {
 				...state,
-				loading: false,
+				updatingCart: false,
 				cartItems: action.payload.cartItems,
 			};
 			break;
@@ -30,12 +31,19 @@ const categoryReducer = (state = initialCartState, action) => {
 		case ADD_TO_CART_FAILURE:
 			state = {
 				...state,
-				loading: false,
+				updatingCart: false,
 				error: action.payload.error,
 			};
 			break;
 
+		case RESET_CART:
+			state = {
+				...initialCartState,
+			};
+			break;
+
 		default:
+			state = { ...state };
 			break;
 	}
 
