@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	// addOrder,
-	getAddress,
-	getCartItems,
-} from "../../redux/allAsyncActions/allAsyncActions";
+import { addOrder, getAddress, getCartItems } from "../../redux/allAsyncActions/allAsyncActions";
 import Layout from "../../components/layout/Layout";
 import { Anchor, MaterialButton, MaterialInput } from "../../components/materialUI/MaterialUI";
 import PriceDetails from "../../components/priceDetails/PriceDetails";
@@ -129,15 +125,19 @@ const CheckoutPage = (props) => {
 	};
 
 	const onConfirmOrder = () => {
+		//total amount of the items selected in the order
 		const totalAmount = Object.keys(cart.cartItems).reduce((totalPrice, key) => {
 			const { price, qty } = cart.cartItems[key];
 			return totalPrice + price * qty;
 		}, 0);
+
+		//total items selected in the order
 		const items = Object.keys(cart.cartItems).map((key) => ({
 			productId: key,
 			payablePrice: cart.cartItems[key].price,
 			purchasedQty: cart.cartItems[key].qty,
 		}));
+
 		const payload = {
 			addressId: selectedAddress._id,
 			totalAmount,
@@ -147,7 +147,7 @@ const CheckoutPage = (props) => {
 		};
 
 		console.log(payload);
-		// dispatch(addOrder(payload));
+		dispatch(addOrder(payload));
 		setConfirmOrder(true);
 	};
 
@@ -163,7 +163,6 @@ const CheckoutPage = (props) => {
 			edit: false,
 		}));
 		setAddress(address);
-		//user.address.length === 0 && setNewAddress(true);
 	}, [user.address]);
 
 	useEffect(() => {
@@ -183,7 +182,12 @@ const CheckoutPage = (props) => {
 						active={!auth.authenticate}
 						body={
 							auth.authenticate ? (
-								<div className="loggedInId">
+								<div
+									className="loggedInId"
+									style={{
+										paddingBottom: "5px",
+									}}
+								>
 									<span style={{ fontWeight: 500 }}>{auth.user.fullName}</span>
 									<span style={{ margin: "0 5px" }}>{auth.user.email}</span>
 								</div>
@@ -201,7 +205,9 @@ const CheckoutPage = (props) => {
 						body={
 							<>
 								{confirmAddress ? (
-									<div className="stepCompleted">{`${selectedAddress.name} ${selectedAddress.address} - ${selectedAddress.pinCode}`}</div>
+									<div className="stepCompleted">
+										{`${selectedAddress.name} ${selectedAddress.address} - ${selectedAddress.pinCode}`}
+									</div>
 								) : (
 									address.map((adr) => (
 										<Address
@@ -246,11 +252,7 @@ const CheckoutPage = (props) => {
 					/>
 
 					{orderSummary && (
-						<Card
-							style={{
-								margin: "10px 0",
-							}}
-						>
+						<Card style={{ margin: "10px 0" }}>
 							<div
 								className="flexRow sb"
 								style={{
@@ -279,13 +281,10 @@ const CheckoutPage = (props) => {
 						active={paymentOption}
 						body={
 							paymentOption && (
-								<div>
+								<div style={{ padding: "10px 20px" }}>
 									<div
 										className="flexRow"
-										style={{
-											alignItems: "center",
-											padding: "20px",
-										}}
+										style={{ alignItems: "center", padding: "20px" }}
 									>
 										<input type="radio" name="paymentOption" value="cod" />
 										<div>Cash on delivery</div>
@@ -293,10 +292,7 @@ const CheckoutPage = (props) => {
 									<MaterialButton
 										title="CONFIRM ORDER"
 										onClick={onConfirmOrder}
-										style={{
-											width: "200px",
-											margin: "0 0 20px 20px",
-										}}
+										style={{ width: "200px", margin: "0 0 20px 20px" }}
 									/>
 								</div>
 							)

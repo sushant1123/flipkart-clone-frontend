@@ -9,7 +9,7 @@ import {
 } from "./product.actions";
 
 export const getProductsBySlug = (slug) => {
-	// console.log(slug);
+	console.log(slug);
 	return async (dispatch) => {
 		dispatch(fetchProductsBySlugRequest());
 		let res = await axios.get(`/products/${slug}`);

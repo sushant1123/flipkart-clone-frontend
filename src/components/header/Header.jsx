@@ -5,12 +5,7 @@ import goldenStar from "../../images/logo/golden-star.png";
 import { IoIosArrowDown, IoIosCart } from "react-icons/io";
 import { login, signout } from "../../redux/allAsyncActions/allAsyncActions";
 
-import {
-	Modal,
-	MaterialInput,
-	MaterialButton,
-	DropdownMenu,
-} from "../materialUI/MaterialUI";
+import { Modal, MaterialInput, MaterialButton, DropdownMenu } from "../materialUI/MaterialUI";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -42,17 +37,9 @@ const Header = (props) => {
 				}
 				menus={[
 					{ label: "My Profile", href: "", icon: null },
-					{
-						label: "SuperCoin Zone",
-						href: "",
-						icon: null,
-					},
-					{
-						label: "Flipkart Plus Zone",
-						href: "",
-						icon: null,
-					},
-					{ label: "Orders", href: "", icon: null },
+					{ label: "SuperCoin Zone", href: "", icon: null },
+					{ label: "Flipkart Plus Zone", href: "", icon: null },
+					{ label: "Orders", href: "/account/orders", icon: null },
 					{ label: "Wishlist", href: "", icon: null },
 					{ label: "My Chats", href: "", icon: null },
 					{ label: "Coupons", href: "", icon: null },
@@ -67,11 +54,7 @@ const Header = (props) => {
 		return (
 			<DropdownMenu
 				menu={
-					<a
-						href="#"
-						className="loginButton"
-						onClick={() => setLoginModal(true)}
-					>
+					<a href="#" className="loginButton" onClick={() => setLoginModal(true)}>
 						Login
 					</a>
 				}
@@ -82,7 +65,14 @@ const Header = (props) => {
 						href: "",
 						icon: null,
 					},
-					{ label: "Orders", href: "", icon: null },
+					{
+						label: "Orders",
+						href: "/account/orders",
+						icon: null,
+						onClick: () => {
+							!auth.authenticate && setLoginModal(true);
+						},
+					},
 					{ label: "Wishlist", href: "", icon: null },
 					{ label: "Rewards", href: "", icon: null },
 					{ label: "Gift Cards", href: "", icon: null },
@@ -112,10 +102,7 @@ const Header = (props) => {
 					<div className="row">
 						<div className="leftspace">
 							<h2>Login</h2>
-							<p>
-								Get access to your Orders, Wishlist and
-								Recommendations
-							</p>
+							<p>Get access to your Orders, Wishlist and Recommendations</p>
 						</div>
 						<div className="rightspace">
 							<div className="loginInputContainer">
@@ -130,15 +117,12 @@ const Header = (props) => {
 									type="password"
 									label="Enter Password"
 									value={password}
-									onChange={(e) =>
-										setPassword(e.target.value)
-									}
+									onChange={(e) => setPassword(e.target.value)}
 									// rightElement={<a href="#">Forgot?</a>}
 								/>
 
 								<p style={{ textAlign: "center" }}>
-									By continuing, you agree to Flipkart's Terms
-									of Use and Privacy Policy.
+									By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.
 								</p>
 								<MaterialButton
 									title="Login"
@@ -164,7 +148,7 @@ const Header = (props) => {
 			<div className="subHeader">
 				{/* logo */}
 				<div className="logo">
-					<a href="">
+					<a href="/">
 						<img src={flipkartLogo} className="logoimage" alt="" />
 					</a>
 					<a style={{ marginTop: "-10px" }}>
@@ -182,10 +166,7 @@ const Header = (props) => {
 					}}
 				>
 					<div className="searchInputContainer">
-						<input
-							className="searchInput"
-							placeholder={"search for products, brands and more"}
-						/>
+						<input className="searchInput" placeholder={"search for products, brands and more"} />
 						<div className="searchIconContainer">
 							{/* <IoIosSearch
 								style={{
@@ -217,9 +198,7 @@ const Header = (props) => {
 
 				{/* right side menu */}
 				<div className="rightMenu">
-					{auth.authenticate
-						? renderLoggedInUserMenu()
-						: renderNonLoggedInUserMenu()}
+					{auth.authenticate ? renderLoggedInUserMenu() : renderNonLoggedInUserMenu()}
 
 					<DropdownMenu
 						menu={

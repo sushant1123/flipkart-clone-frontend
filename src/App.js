@@ -8,6 +8,7 @@ import { isUserLoggedIn, updateCart } from "./redux/allAsyncActions/allAsyncActi
 import ProductDetailsPage from "./containers/productDetailsPage/ProductDetailsPage";
 import CartPage from "./containers/cartPage/CartPage";
 import CheckoutPage from "./containers/checkoutPage/CheckoutPage";
+import OrderPage from "./containers/ordersPage/OrderPage";
 
 function App() {
 	const auth = useSelector((state) => state.auth);
@@ -31,10 +32,8 @@ function App() {
 					<Route exact path="/" element={<HomePage />}></Route>
 					<Route path="/cart" element={<CartPage />}></Route>
 					<Route path="/checkout" element={<CheckoutPage />}></Route>
-					<Route
-						path="/:productSlug/:productId/p"
-						element={<ProductDetailsPage />}
-					></Route>
+					<Route path="/account/orders" element={<OrderPage />}></Route>
+					<Route path="/:productSlug/:productId/p" element={<ProductDetailsPage />}></Route>
 					<Route path="/:slug" element={<ProductListPage />}></Route>
 				</Routes>
 			</Router>

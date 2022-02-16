@@ -6,6 +6,7 @@ import ProductStore from "./ProductStore/ProductStore";
 import { useSearchParams } from "react-router-dom";
 import { getParams } from "../../utils/getParams";
 import ProductPage from "./productPage/ProductPage";
+import ClothingAndAccessories from "./clothingAndAccessories/ClothingAndAccessories";
 
 const ProductListPage = (props) => {
 	const [searchParams] = useSearchParams();
@@ -25,19 +26,14 @@ const ProductListPage = (props) => {
 				break;
 
 			default:
-				content = null;
+				content = <ClothingAndAccessories {...props} />;
 				break;
 		}
 
 		return content;
 	};
 
-	return (
-		<Layout>
-			{/* <ProductStore {...props} /> */}
-			{renderProducts()}
-		</Layout>
-	);
+	return <Layout>{renderProducts()}</Layout>;
 };
 
 export default ProductListPage;

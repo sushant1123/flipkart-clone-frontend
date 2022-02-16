@@ -1,9 +1,4 @@
-import {
-	ADD_TO_CART_REQUEST,
-	ADD_TO_CART_SUCCESS,
-	ADD_TO_CART_FAILURE,
-	RESET_CART,
-} from "./cartConstants";
+import { ADD_TO_CART_REQUEST, ADD_TO_CART_SUCCESS, ADD_TO_CART_FAILURE, RESET_CART } from "./cartConstants";
 
 export const addToCartRequest = () => {
 	return { type: ADD_TO_CART_REQUEST };
