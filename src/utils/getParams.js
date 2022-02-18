@@ -1,4 +1,4 @@
-exports.getParams = (params) => {
+export const getParams = (params) => {
 	const paramsObj = {};
 	for (const entry of params.entries()) {
 		const value = entry[1];
