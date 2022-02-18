@@ -9,7 +9,6 @@ import { IoIosArrowForward } from "react-icons/io";
 
 import "./style.css";
 import { Breed } from "../../components/materialUI/MaterialUI";
-import { generatePublicURL } from "../../helpers/urlConfig";
 
 const OrderPage = (props) => {
 	const dispatch = useDispatch();
@@ -42,7 +41,7 @@ const OrderPage = (props) => {
 								<div className="orderImgContainer">
 									<img
 										className="orderImg"
-										src={generatePublicURL(item.productId.productPictures[0].img)}
+										src={item.productId.productPictures[0].img}
 										alt={item.name}
 									/>
 								</div>

@@ -6,7 +6,6 @@ import { BiRupee } from "react-icons/bi";
 import { Link, useParams } from "react-router-dom";
 
 import "./style.css";
-import { generatePublicURL } from "../../../helpers/urlConfig";
 
 const ClothingAndAccessories = (props) => {
 	const product = useSelector((state) => state.product);
@@ -30,7 +29,7 @@ const ClothingAndAccessories = (props) => {
 				{product.products.map((product, index) => (
 					<div className="caContainer" key={index}>
 						<Link className="caImgContainer" to={`/${product.slug}/${product._id}/p`}>
-							<img src={generatePublicURL(product.productPictures[0].img)} alt="" />
+							<img src={product.productPictures[0].img} alt="" />
 						</Link>
 						<div>
 							<div className="caProductName">{product.name}</div>

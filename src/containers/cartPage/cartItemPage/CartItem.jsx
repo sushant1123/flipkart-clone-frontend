@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { generatePublicURL } from "../../../helpers/urlConfig";
 import "./style.css";
 
 const CartItem = (props) => {
@@ -22,10 +21,7 @@ const CartItem = (props) => {
 			<div className="flexRow">
 				<div className="cartProImgContainer">
 					{/* <img src={img} alt={name} /> */}
-					<img
-						src={img.includes("http://localhost:2000/public/") ? img : generatePublicURL(img)}
-						alt={name}
-					/>
+					<img src={img} alt={name} />
 				</div>
 				<div className="cartItemDetails">
 					<div>

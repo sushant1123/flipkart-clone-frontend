@@ -7,7 +7,6 @@ import Card from "../../../components/UI/card/Card";
 import Price from "../../../components/priceDetails/PriceDetails";
 
 import "./style.css";
-import { generatePublicURL } from "../../../helpers/urlConfig";
 
 const OrderDetailsPage = (props) => {
 	const dispatch = useDispatch();
@@ -75,7 +74,7 @@ const OrderDetailsPage = (props) => {
 					<Card style={{ display: "flex", padding: "20px 0", margin: "10px 0" }} key={index}>
 						<div className="flexRow">
 							<div className="delItemImgContainer">
-								<img src={generatePublicURL(item.productId.productPictures[0].img)} alt="" />
+								<img src={item.productId.productPictures[0].img} alt="" />
 							</div>
 							<div style={{ width: "250px" }}>
 								<div className="delItemName">{item.productId.name}</div>

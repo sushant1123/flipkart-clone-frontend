@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProductsBySlug } from "../../../redux/allAsyncActions/allAsyncActions";
-import { generatePublicURL } from "../../../helpers/urlConfig";
 import { Link } from "react-router-dom";
 import Card from "../../../components/UI/card/Card";
 import Price from "../../../components/Price";
@@ -53,10 +52,7 @@ const ProductStore = (props) => {
 										key={index}
 									>
 										<div className="productImgContainer">
-											<img
-												src={generatePublicURL(product.productPictures[0].img)}
-												alt={product.name}
-											/>
+											<img src={product.productPictures[0].img} alt={product.name} />
 										</div>
 										<div className="productInfo">
 											<div className="productTitle" style={{ fontSize: "14px" }}>

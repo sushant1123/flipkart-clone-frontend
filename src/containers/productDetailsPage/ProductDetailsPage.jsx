@@ -7,7 +7,6 @@ import { IoIosArrowForward, IoIosStar, IoMdCart } from "react-icons/io";
 import { BiRupee } from "react-icons/bi";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { MaterialButton } from "../../components/materialUI/MaterialUI";
-import { generatePublicURL } from "../../helpers/urlConfig";
 import { addToCart } from "../../redux/allAsyncActions/allAsyncActions";
 
 import "./style.css";
@@ -39,10 +38,8 @@ const ProductDetailsPage = (props) => {
 			name,
 			_id,
 			price,
-			img: generatePublicURL(img),
+			img: img,
 		};
-		// console.log(name, _id, price, generatePublicURL(img));
-		console.log(productObj);
 		dispatch(addToCart(productObj));
 
 		navigate("/cart");
@@ -54,24 +51,16 @@ const ProductDetailsPage = (props) => {
 			<div className="productDescriptionContainer">
 				<div className="flexRow">
 					<div className="verticalImageStack">
-						{product.productDetails.productPictures.map(
-							(thumb, index) => (
-								<div className="thumbnail" key={index}>
-									<img
-										src={generatePublicURL(thumb.img)}
-										alt={thumb.img}
-									/>
-								</div>
-							)
-						)}
+						{product.productDetails.productPictures.map((thumb, index) => (
+							<div className="thumbnail" key={index}>
+								<img src={thumb.img} alt={thumb.img} />
+							</div>
+						))}
 					</div>
 					<div className="productDescContainer">
 						<div className="productDescImgContainer">
 							<img
-								src={generatePublicURL(
-									product.productDetails.productPictures[0]
-										.img
-								)}
+								src={product.productDetails.productPictures[0].img}
 								alt={`${product.productDetails.productPictures[0].img}`}
 							/>
 						</div>
@@ -124,16 +113,12 @@ const ProductDetailsPage = (props) => {
 					</div>
 					{/* product description */}
 					<div className="productDetails">
-						<p className="productTitle">
-							{product.productDetails.name}
-						</p>
+						<p className="productTitle">{product.productDetails.name}</p>
 						<div>
 							<span className="ratingCount">
 								4.3 <IoIosStar />
 							</span>
-							<span className="ratingNumbersReviews">
-								72,234 Ratings & 8,140 Reviews
-							</span>
+							<span className="ratingNumbersReviews">72,234 Ratings & 8,140 Reviews</span>
 						</div>
 						<div className="extraOffer">
 							Extra <BiRupee />
@@ -144,10 +129,7 @@ const ProductDetailsPage = (props) => {
 								<BiRupee />
 								{product.productDetails.price}
 							</span>
-							<span
-								className="discount"
-								style={{ margin: "0 10px" }}
-							>
+							<span className="discount" style={{ margin: "0 10px" }}>
 								22% off
 							</span>
 							{/* <span>i</span> */}
