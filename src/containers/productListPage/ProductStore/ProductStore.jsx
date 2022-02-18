@@ -5,6 +5,9 @@ import { getProductsBySlug } from "../../../redux/allAsyncActions/allAsyncAction
 import { generatePublicURL } from "../../../helpers/urlConfig";
 import { Link } from "react-router-dom";
 import Card from "../../../components/UI/card/Card";
+import Price from "../../../components/Price";
+import Rating from "../../../components/Rating";
+import { MaterialButton } from "../../../components/materialUI/MaterialUI";
 
 const ProductStore = (props) => {
 	const product = useSelector((state) => state.product);
@@ -32,53 +35,43 @@ const ProductStore = (props) => {
 					<Card
 						key={index}
 						headerLeft={`${params.slug.split("-")[0]} ${
-							key.includes("under")
-								? `mobiles under ₹${priceRange[key]}`
-								: priceRange[key]
+							key.includes("under") ? `mobiles under ₹${priceRange[key]}` : priceRange[key]
 						}`}
-						headerRight={<button>View All</button>}
+						headerRight={<MaterialButton title="View All" bgColor="#2874f0" />}
 						style={{
 							width: "calc(100% - 45px)",
 							margin: "20px",
 						}}
 					>
 						<div className="product">
-							{product.productsByPrice[key].map(
-								(product, index) => {
-									return (
-										<Link
-											to={`/${product.slug}/${product._id}/p`}
-											style={{ display: "block" }}
-											className="productContainer"
-											key={index}
-										>
-											<div className="productImgContainer">
-												<img
-													src={generatePublicURL(
-														product
-															.productPictures[0]
-															.img
-													)}
-													alt={product.name}
-												/>
+							{product.productsByPrice[key].map((product, index) => {
+								return (
+									<Link
+										to={`/${product.slug}/${product._id}/p`}
+										style={{ display: "block", textDecoration: "none" }}
+										className="productContainer"
+										key={index}
+									>
+										<div className="productImgContainer">
+											<img
+												src={generatePublicURL(product.productPictures[0].img)}
+												alt={product.name}
+											/>
+										</div>
+										<div className="productInfo">
+											<div className="productTitle" style={{ fontSize: "14px" }}>
+												{product.name}
 											</div>
-											<div className="productInfo">
-												<div className="productTitle">
-													{product.name}
-												</div>
-												<div>
-													<span>4.5</span>{" "}
-													&nbsp;&nbsp;
-													<span>5003</span>
-												</div>
-												<div className="productPrice">
-													{product.price}
-												</div>
+											<div style={{}}>
+												<Rating value={"4.5"} /> &nbsp; &nbsp;
+												<span style={{ color: "gray" }}>(5003)</span>
 											</div>
-										</Link>
-									);
-								}
-							)}
+											<br />
+											<Price value={product.price} />
+										</div>
+									</Link>
+								);
+							})}
 						</div>
 					</Card>
 				);

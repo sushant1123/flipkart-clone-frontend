@@ -5,6 +5,9 @@ import {
 	LOGOUT_FAILURE,
 	LOGOUT_REQUEST,
 	LOGOUT_SUCCESS,
+	SIGNUP_FAILURE,
+	SIGNUP_REQUEST,
+	SIGNUP_SUCCESS,
 } from "./authConstants";
 
 export const loginRequest = () => {
@@ -42,9 +45,27 @@ export const logoutRequest = () => {
 	};
 };
 
-export const logoutFailure = (errorMsg) => {
+export const logoutFailure = (error) => {
 	return {
 		type: LOGOUT_FAILURE,
-		payload: { error: errorMsg },
+		payload: { error },
+	};
+};
+
+export const signupRequest = () => {
+	return {
+		type: SIGNUP_REQUEST,
+	};
+};
+
+export const signupSuccess = () => {
+	return {
+		type: SIGNUP_SUCCESS,
+	};
+};
+
+export const signupFailure = () => {
+	return {
+		type: SIGNUP_FAILURE,
 	};
 };

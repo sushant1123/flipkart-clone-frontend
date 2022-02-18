@@ -23,11 +23,7 @@ const CartItem = (props) => {
 				<div className="cartProImgContainer">
 					{/* <img src={img} alt={name} /> */}
 					<img
-						src={
-							img.includes("http://localhost:2000/public/")
-								? img
-								: generatePublicURL(img)
-						}
+						src={img.includes("http://localhost:2000/public/") ? img : generatePublicURL(img)}
 						alt={name}
 					/>
 				</div>
@@ -54,10 +50,7 @@ const CartItem = (props) => {
 
 				{/* action buttons on cart item */}
 				<button className="cartActionBtn">save for later</button>
-				<button
-					className="cartActionBtn"
-					onClick={() => props.onRemoveCartItem(_id)}
-				>
+				<button className="cartActionBtn" onClick={() => props.removeCartItem(_id)}>
 					Remove
 				</button>
 			</div>

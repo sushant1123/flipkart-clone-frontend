@@ -20,10 +20,10 @@ export const fetchProductsBySlugSuccess = (productList) => {
 	};
 };
 
-export const fetchProductsBySlugFailure = (errorMsg) => {
+export const fetchProductsBySlugFailure = (error) => {
 	return {
 		type: GET_PRODUCTS_BY_SLUG_FAILURE,
-		payload: { error: errorMsg },
+		payload: { error: error },
 	};
 };
 

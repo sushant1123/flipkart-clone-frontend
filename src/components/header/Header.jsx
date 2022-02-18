@@ -3,18 +3,22 @@ import "./header.css";
 import flipkartLogo from "../../images/logo/flipkart.png";
 import goldenStar from "../../images/logo/golden-star.png";
 import { IoIosArrowDown, IoIosCart } from "react-icons/io";
-import { login, signout } from "../../redux/allAsyncActions/allAsyncActions";
+import { login, signout, signupAction } from "../../redux/allAsyncActions/allAsyncActions";
 
 import { Modal, MaterialInput, MaterialButton, DropdownMenu } from "../materialUI/MaterialUI";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Badge } from "@mui/material";
 
 const Header = (props) => {
 	const [loginModal, setLoginModal] = useState(false);
+	const [signup, setSignup] = useState(false);
+	const [firstName, setFirstName] = useState("");
+	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
 	const auth = useSelector((state) => state.auth);
+	const cart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -22,10 +26,6 @@ const Header = (props) => {
 			setLoginModal(false);
 		}
 	}, [auth.authenticate]);
-
-	const logout = () => {
-		dispatch(signout());
-	};
 
 	const renderLoggedInUserMenu = () => {
 		return (
@@ -54,7 +54,14 @@ const Header = (props) => {
 		return (
 			<DropdownMenu
 				menu={
-					<a href="#" className="loginButton" onClick={() => setLoginModal(true)}>
+					<a
+						href="#"
+						className="loginButton"
+						onClick={() => {
+							setSignup(false);
+							setLoginModal(true);
+						}}
+					>
 						Login
 					</a>
 				}
@@ -80,7 +87,14 @@ const Header = (props) => {
 				firstMenu={
 					<div className="firstmenu">
 						<span>New Customer?</span>
-						<a href="/" style={{ color: "#2874f0" }}>
+						<a
+							href="#"
+							style={{ color: "#2874f0" }}
+							onClick={() => {
+								setLoginModal(true);
+								setSignup(true);
+							}}
+						>
 							Sign Up
 						</a>
 					</div>
@@ -89,10 +103,24 @@ const Header = (props) => {
 		);
 	};
 
+	const logout = () => {
+		dispatch(signout());
+	};
+	const userSignup = () => {
+		const user = { firstName, lastName, email, password };
+		if (firstName === "" || lastName === "" || email === "" || password === "") {
+			return;
+		}
+		dispatch(signupAction(user));
+	};
+
 	const handleUserLoginRequest = (e) => {
-		const user = { email, password };
-		// console.log(user);
-		dispatch(login(user));
+		if (signup) {
+			userSignup();
+		} else {
+			const user = { email, password };
+			dispatch(login(user));
+		}
 	};
 
 	return (
@@ -106,6 +134,23 @@ const Header = (props) => {
 						</div>
 						<div className="rightspace">
 							<div className="loginInputContainer">
+								{signup && (
+									<>
+										<MaterialInput
+											type="text"
+											label="Enter First Name"
+											value={firstName}
+											onChange={(e) => setFirstName(e.target.value)}
+										/>
+
+										<MaterialInput
+											type="text"
+											label="Enter Last Name"
+											value={lastName}
+											onChange={(e) => setLastName(e.target.value)}
+										/>
+									</>
+								)}
 								<MaterialInput
 									type="text"
 									label="Enter Email/Enter Mobile Number"
@@ -125,7 +170,7 @@ const Header = (props) => {
 									By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.
 								</p>
 								<MaterialButton
-									title="Login"
+									title={signup ? "Register" : "Login"}
 									bgColor="#fb641b"
 									textColor="#ffffff"
 									style={{ margin: "40px 0 20px 0" }}
@@ -225,7 +270,9 @@ const Header = (props) => {
 					/>
 					<div>
 						<a className="cart" href="/cart">
-							<IoIosCart />
+							<Badge color="secondary" badgeContent={Object.keys(cart.cartItems).length}>
+								<IoIosCart />
+							</Badge>
 							<span style={{ margin: "0 10px" }}>Cart</span>
 						</a>
 					</div>

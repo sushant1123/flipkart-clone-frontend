@@ -4,7 +4,7 @@ import Card from "../../components/UI/card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./cartItemPage/CartItem";
 // import PriceDetails from "./priceDetailsPage/PriceDetails";
-import { addToCart, getCartItems } from "../../redux/allAsyncActions/allAsyncActions";
+import { addToCart, getCartItems, removeCartItem } from "../../redux/allAsyncActions/allAsyncActions";
 
 import "./style.css";
 import { MaterialButton } from "../../components/materialUI/MaterialUI";
@@ -40,6 +40,14 @@ const CartPage = (props) => {
 		dispatch(addToCart(productObj, -1));
 	};
 
+	const onRemoveCartItem = (_id) => {
+		const payload = {
+			productId: _id,
+		};
+
+		dispatch(removeCartItem(payload));
+	};
+
 	if (props.onlyCartItems) {
 		return (
 			<>
@@ -49,6 +57,7 @@ const CartPage = (props) => {
 						cartItem={cartItems[key]}
 						onQuantityInc={onQuantityIncrement}
 						onQuantityDec={onQuantityDecrement}
+						removeCartItem={onRemoveCartItem}
 					/>
 				))}
 			</>
@@ -69,6 +78,7 @@ const CartPage = (props) => {
 							cartItem={cartItems[key]}
 							onQuantityInc={onQuantityIncrement}
 							onQuantityDec={onQuantityDecrement}
+							removeCartItem={onRemoveCartItem}
 						/>
 					))}
 

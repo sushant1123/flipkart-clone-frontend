@@ -9,6 +9,7 @@ import ProductDetailsPage from "./containers/productDetailsPage/ProductDetailsPa
 import CartPage from "./containers/cartPage/CartPage";
 import CheckoutPage from "./containers/checkoutPage/CheckoutPage";
 import OrderPage from "./containers/ordersPage/OrderPage";
+import OrderDetailsPage from "./containers/ordersPage/orderDetailsPage/OrderDetailsPage";
 
 function App() {
 	const auth = useSelector((state) => state.auth);
@@ -33,6 +34,7 @@ function App() {
 					<Route path="/cart" element={<CartPage />}></Route>
 					<Route path="/checkout" element={<CheckoutPage />}></Route>
 					<Route path="/account/orders" element={<OrderPage />}></Route>
+					<Route path="/order_details/:orderId" element={<OrderDetailsPage />}></Route>
 					<Route path="/:productSlug/:productId/p" element={<ProductDetailsPage />}></Route>
 					<Route path="/:slug" element={<ProductListPage />}></Route>
 				</Routes>

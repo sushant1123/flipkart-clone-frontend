@@ -1,4 +1,6 @@
+import { CardActionArea } from "@mui/material";
 import {
+	LOGIN_FAILURE,
 	LOGIN_REQUEST,
 	LOGIN_SUCCESS,
 	LOGOUT_FAILURE,
@@ -37,6 +39,13 @@ const authReducer = (state = initialAuthState, action) => {
 				token: action.payload.token,
 				authenticate: true,
 				loading: false,
+			};
+			break;
+
+		case LOGIN_FAILURE:
+			state = {
+				...initialAuthState,
+				error: action.payload.error,
 			};
 			break;
 

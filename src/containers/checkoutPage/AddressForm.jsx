@@ -15,10 +15,12 @@ const AddressForm = (props) => {
 	const [landmark, setLandmark] = useState(initialData ? initialData.landmark : "");
 	const [alternatePhone, setAlternatePhone] = useState(initialData ? initialData.alternatePhone : "");
 	const [addressType, setAddressType] = useState(initialData ? initialData.addressType : "");
-	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
+
 	const [submitFlag, setSubmitFlag] = useState(false);
 	const [id, setId] = useState(initialData ? initialData._id : "");
+
+	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
 
 	const inputContainer = {
 		width: "100%",

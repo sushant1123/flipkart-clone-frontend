@@ -1,9 +1,5 @@
 import axios from "../../helpers/axios";
-import {
-	fetchProductPageFailure,
-	fetchProductPageSuccess,
-	fetchProductPageRequest,
-} from "./page.actions";
+import { fetchProductPageFailure, fetchProductPageSuccess, fetchProductPageRequest } from "./page.actions";
 
 export const getProductPage = (payload) => {
 	return async (dispatch) => {
@@ -12,7 +8,7 @@ export const getProductPage = (payload) => {
 
 			dispatch(fetchProductPageRequest());
 			let res = await axios.get(`/page/${cid}/${type}`);
-			console.log(res);
+			// console.log(res);
 
 			if (res.status === 200) {
 				const { page } = res.data;
@@ -23,6 +19,7 @@ export const getProductPage = (payload) => {
 			}
 		} catch (error) {
 			console.log(error);
+			dispatch(fetchProductPageFailure(error));
 		}
 	};
 };

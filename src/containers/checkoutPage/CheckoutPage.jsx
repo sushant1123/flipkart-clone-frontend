@@ -7,8 +7,10 @@ import PriceDetails from "../../components/priceDetails/PriceDetails";
 import Card from "../../components/UI/card/Card";
 import CartPage from "../cartPage/CartPage";
 import AddressForm from "./AddressForm";
+import { Modal, Button } from "react-bootstrap";
 
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutStep = (props) => {
 	return (
@@ -88,8 +90,13 @@ const CheckoutPage = (props) => {
 	const [orderConfirmation, setOrderConfirmation] = useState(false);
 	const [paymentOption, setPaymentOption] = useState(false);
 	const [confirmOrder, setConfirmOrder] = useState(false);
+
 	const cart = useSelector((state) => state.cart);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+
+	//tryout
+	const [cartEmptyModal, setCartEmptyModal] = useState(cart.cartItems.length);
 
 	const onAddressSubmit = (addr) => {
 		setSelectedAddress(addr);
@@ -167,12 +174,28 @@ const CheckoutPage = (props) => {
 
 	useEffect(() => {
 		if (confirmOrder && user.placedOrderId) {
-			props.history.push(`/order_details/${user.placedOrderId}`);
+			navigate(`/order_details/${user.placedOrderId}`);
 		}
 	}, [user.placedOrderId]);
 
 	return (
 		<Layout>
+			{/* only if cart length is 0 and we are on order summary step */}
+			<Modal show={cartEmptyModal} backdrop="static" keyboard={false}>
+				<Modal.Body>
+					<h2>Your checkout has no items.</h2>
+					<Button
+						variant="primary"
+						onClick={() => {
+							navigate("/cart");
+							setCartEmptyModal(false);
+						}}
+					>
+						GO TO CART
+					</Button>
+				</Modal.Body>
+			</Modal>
+
 			<div className="cartContainer" style={{ alignItems: "flex-start" }}>
 				<div className="checkoutContainer">
 					{/* check if user logged in or not */}
@@ -209,7 +232,7 @@ const CheckoutPage = (props) => {
 										{`${selectedAddress.name} ${selectedAddress.address} - ${selectedAddress.pinCode}`}
 									</div>
 								) : (
-									address.map((adr) => (
+									address.map((adr, index) => (
 										<Address
 											key={adr._id}
 											selectAddress={selectAddress}
@@ -241,13 +264,39 @@ const CheckoutPage = (props) => {
 						title={"ORDER SUMMARY"}
 						active={orderSummary}
 						body={
-							orderSummary ? (
-								<CartPage onlyCartItems={true} />
-							) : orderConfirmation ? (
-								<div className="stepCompleted">
-									{Object.keys(cart.cartItems).length} items
-								</div>
-							) : null
+							<>
+								{Object.keys(cart.cartItems).length > 0 ? (
+									//main code start
+									orderSummary ? (
+										<CartPage onlyCartItems={true} />
+									) : orderConfirmation ? (
+										<div className="stepCompleted">
+											{Object.keys(cart.cartItems).length} items
+										</div>
+									) : null
+								) : (
+									//main code ends
+									<>
+										{/* {setCartEmptyModal(true)} */}
+										<p
+											style={{
+												padding: "20px 60px",
+												backgroundColor: "rgb(233, 236, 180)",
+											}}
+										>
+											Your checkout has no items.
+										</p>
+										<MaterialButton
+											bgColor="#2874f0"
+											variant="primary"
+											color="#fff"
+											title="GO TO CART"
+											width="20%"
+											onClick={() => navigate("/cart")}
+										/>
+									</>
+								)}
+							</>
 						}
 					/>
 

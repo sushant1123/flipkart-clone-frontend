@@ -1,5 +1,6 @@
 import {
 	GET_PRODUCTS_BY_SLUG_SUCCESS,
+	GET_PRODUCTS_BY_SLUG_REQUEST,
 	GET_PRODUCTS_BY_SLUG_FAILURE,
 	GET_PRODUCT_DETAILS_BY_ID_FAILURE,
 	GET_PRODUCT_DETAILS_BY_ID_REQUEST,
@@ -9,29 +10,29 @@ import {
 const initialProductState = {
 	loading: false,
 	products: [],
-	productsByPrice: {
-		under5k: [],
-		under10k: [],
-		under15k: [],
-		under20k: [],
-		under40k: [],
-		premiumPhones: [],
-	},
+	productsByPrice: {},
+	priceRange: {},
 	error: null,
 	productDetails: {},
 };
 
 const productReducer = (state = initialProductState, action) => {
-	console.log(action.payload);
-
 	switch (action.type) {
+		case GET_PRODUCTS_BY_SLUG_REQUEST:
+			state = {
+				...state,
+				loading: true,
+			};
+			break;
+
 		case GET_PRODUCTS_BY_SLUG_SUCCESS:
-			const { products, productsByPrice } = action.payload;
+			const { products, productsByPrice, priceRange } = action.payload;
 
 			state = {
 				...state,
 				loading: false,
 				products: products,
+				priceRange: priceRange,
 				productsByPrice: {
 					...productsByPrice,
 				},
@@ -72,6 +73,7 @@ const productReducer = (state = initialProductState, action) => {
 			break;
 
 		default:
+			state = { ...state };
 			break;
 	}
 

@@ -32,14 +32,18 @@ const OrderPage = (props) => {
 					]}
 					breedIcon={<IoIosArrowForward />}
 				/>
-				{user.orders.map((order) => {
-					return order.items.map((item) => (
-						<Card style={{ display: "block", margin: "5px 0" }}>
+				{user.orders.map((order, orderIndex) => {
+					return order.items.map((item, itemIndex) => (
+						<Card
+							style={{ display: "block", margin: "5px 0" }}
+							key={`${orderIndex}-${itemIndex}`}
+						>
 							<Link to={`/order_details/${order._id}`} className="orderItemContainer">
 								<div className="orderImgContainer">
 									<img
 										className="orderImg"
 										src={generatePublicURL(item.productId.productPictures[0].img)}
+										alt={item.name}
 									/>
 								</div>
 								<div className="orderRow">

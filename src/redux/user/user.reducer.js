@@ -11,13 +11,18 @@ import {
 	GET_USER_ORDER_REQUEST,
 	GET_USER_ORDER_SUCCESS,
 	GET_USER_ORDER_FAILURE,
+	GET_USER_ORDER_DETAILS_REQUEST,
+	GET_USER_ORDER_DETAILS_SUCCESS,
+	GET_USER_ORDER_DETAILS_FAILURE,
 } from "./userConstants";
 
 const initialUserState = {
 	loading: false,
+	orderFetching: false,
 	address: [],
 	orders: [],
-	orderFetching: false,
+	orderDetails: {},
+	placedOrderId: null,
 	error: null,
 };
 
@@ -82,7 +87,8 @@ const userReducer = (state = initialUserState, action) => {
 			state = {
 				...state,
 				loading: false,
-				orders: [...state.orders, action.payload.order],
+				placedOrderId: action.payload.order._id,
+				// orders: [...state.orders, action.payload.order],
 			};
 			break;
 
@@ -115,6 +121,32 @@ const userReducer = (state = initialUserState, action) => {
 				orderFetching: false,
 				error: action.payload.error,
 			};
+			break;
+
+		case GET_USER_ORDER_DETAILS_REQUEST:
+			// state = {
+			// 	...state,
+			// 	orderFetching: true,
+			// 	loading: true,
+			// };
+			break;
+
+		case GET_USER_ORDER_DETAILS_SUCCESS:
+			state = {
+				...state,
+				loading: false,
+				orderFetching: false,
+				orderDetails: action.payload.order,
+			};
+			break;
+
+		case GET_USER_ORDER_DETAILS_FAILURE:
+			// state = {
+			// 	...state,
+			// 	loading: false,
+			// 	orderFetching: false,
+			// 	error: action.payload.error,
+			// };
 			break;
 
 		default:

@@ -22,7 +22,6 @@ const pageReducer = (state = initialProductPageState, action) => {
 		case GET_PRODUCT_PAGE_SUCCESS:
 			state = {
 				...state,
-
 				pageRequest: false,
 				page: action.payload.page,
 				error: null,
@@ -32,13 +31,13 @@ const pageReducer = (state = initialProductPageState, action) => {
 		case GET_PRODUCT_PAGE_FAILURE:
 			state = {
 				...state,
-
 				pageRequest: false,
 				error: action.payload.error,
 			};
 			break;
 
 		default:
+			state = { ...state };
 			break;
 	}
 

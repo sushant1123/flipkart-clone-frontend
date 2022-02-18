@@ -11,6 +11,9 @@ import {
 	GET_USER_ORDER_REQUEST,
 	GET_USER_ORDER_SUCCESS,
 	GET_USER_ORDER_FAILURE,
+	GET_USER_ORDER_DETAILS_REQUEST,
+	GET_USER_ORDER_DETAILS_SUCCESS,
+	GET_USER_ORDER_DETAILS_FAILURE,
 } from "./userConstants";
 
 //address actions
@@ -40,9 +43,10 @@ export const addUserAddressRequest = () => {
 	};
 };
 
-export const addUserAddressSuccess = () => {
+export const addUserAddressSuccess = (address) => {
 	return {
 		type: ADD_USER_ADDRESS_SUCCESS,
+		payload: { address },
 	};
 };
 
@@ -89,6 +93,27 @@ export const addUserOrderSuccess = (order) => {
 export const addUserOrderFailure = (error) => {
 	return {
 		type: ADD_USER_ORDER_FAILURE,
+		payload: { error },
+	};
+};
+
+//get user order details req.
+export const getUserOrdersDetailsRequest = () => {
+	return {
+		type: GET_USER_ORDER_DETAILS_REQUEST,
+	};
+};
+
+export const getUserOrdersDetailsSuccess = (order) => {
+	return {
+		type: GET_USER_ORDER_DETAILS_SUCCESS,
+		payload: { order },
+	};
+};
+
+export const getUserOrdersDetailsFailure = (error) => {
+	return {
+		type: GET_USER_ORDER_DETAILS_FAILURE,
 		payload: { error },
 	};
 };
